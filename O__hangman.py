@@ -62,8 +62,9 @@ def displayBoard(missedLetters, correctLetters, secretWord):
 
     for i in range(len(secretWord)): # replace blanks with correctly guessed letters
         if secretWord[i] in correctLetters:
-            blanks = blanks[:i] + secretWord[i] + blanks[i+1:] # we check every leltters in secretWord one at a time
-
+            blanks = blanks[:i] + secretWord[i] + blanks[i+1:] # we check every letters in secretWord one at a time
+            print(blanks)
+            
     for letter in blanks: # show the secret word with spaces in between each letter
         print(letter, end=' ')
     print()
@@ -87,3 +88,47 @@ def playAgain():
     # This function returns True if the player wants to play again; otherwise, it returns False. (connected with while True)
     print('Do you want to play again? (yes or no)')
     return input().lower().startswith('y')    # ! Accept every answers starting with y 
+
+print('H A N G M A N')
+missedLetters = ''
+correctLetters = ''
+secretWord = getRandomWord(words)
+gameIsDone = False
+
+while True:
+    displayBoard(missedLetters, correctLetters, secretWord)
+
+    # Let the player enter a letter.
+    guess = getGuess(missedLetters + correctLetters)
+
+    if guess in secretWord:
+        correctLetters = correctLetters + guess
+
+        # Check if the player has won.
+        foundAllLetters = True
+        for i in range(len(secretWord)):
+            if secretWord[i] not in correctLetters:
+                foundAllLetters = False
+                break
+        if foundAllLetters:
+            print('Yes! The secret word is "' + secretWord + '"! You have won!')
+            gameIsDone = True
+    else:
+        missedLetters = missedLetters + guess
+
+        # Check if player has guessed too many times and lost.
+        if len(missedLetters) == len(HANGMAN_PICS) - 1:
+            displayBoard(missedLetters, correctLetters, secretWord)
+            print('You have run out of guesses!\nAfter ' + str(len(missedLetters)) + ' missed guesses and ' + str(len(correctLetters)) + ' correct guesses, the word was "' + secretWord + '"')
+            gameIsDone = True
+
+    # Ask the player if they want to play again (but only if the game is done).
+    if gameIsDone:
+        if playAgain():
+            missedLetters = ''
+            correctLetters = ''
+            gameIsDone = False
+            secretWord = getRandomWord(words)
+        else:
+            print("Bye bye !!!")
+            break
