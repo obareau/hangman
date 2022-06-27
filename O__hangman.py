@@ -37,8 +37,33 @@ HANGMAN_PICS = ['''
  /|\  |
  / \  |
      ===''']
-words = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split() 
+# words = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk lion lizard llama mole monkey moose mouse mule newt otter owl panda parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep skunk sloth snake spider stork swan tiger toad trout turkey turtle weasel whale wolf wombat zebra'.split() 
 #Easier to write and to maintain with split no need to put "" to every words
+
+# file = open("wordlist.txt", 'r')
+# words = file.read()
+# words = words.split()
+# file.close()
+
+# Choose list
+choiceList = input("Choisissez votre liste de mots [a]Anglais , [f]Français : ")
+choiceList = choiceList.lower() #all lowercase
+if len(choiceList) != 1:
+    print('Please enter a single letter.')
+
+if choiceList == "a":
+    with open("engWordList.txt") as f:
+        words = f.read()
+        words = words.split()
+
+elif choiceList == "f":
+    with open("freWordList.txt") as f:
+        words = f.read()
+        words = words.split()
+
+
+
+    
 
 def getRandomWord(wordList):
     # This function returns a random string from the passed list of strings.add()
@@ -63,7 +88,7 @@ def displayBoard(missedLetters, correctLetters, secretWord):
     for i in range(len(secretWord)): # replace blanks with correctly guessed letters
         if secretWord[i] in correctLetters:
             blanks = blanks[:i] + secretWord[i] + blanks[i+1:] # we check every letters in secretWord one at a time
-            print(blanks)
+            # print(blanks)
             
     for letter in blanks: # show the secret word with spaces in between each letter
         print(letter, end=' ')
@@ -94,7 +119,7 @@ missedLetters = ''
 correctLetters = ''
 secretWord = getRandomWord(words)
 gameIsDone = False
-
+choiceList = 0
 while True:
     displayBoard(missedLetters, correctLetters, secretWord)
 
