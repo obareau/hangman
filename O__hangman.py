@@ -1,6 +1,6 @@
 import random
 
-# Lets define some USEFULL CONSTANTS
+# Lets define some USEFUL CONSTANTS
 HANGMAN_PICS = ['''
   +---+
       |
