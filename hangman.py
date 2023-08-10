@@ -40,11 +40,6 @@ for l in solution:
     display= display + "_ "
 
 
-
-
-
-
-
 # Gamelogic
 while trial > 0:    
     print("Mot à deviner :\n", display + "  : " +  str(len(solution))+ " lettres")
